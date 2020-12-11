@@ -13,7 +13,7 @@
             <a class="navbar-brand" href="#">Lobby</a>
             <div class="d-flex">
                 <a href="{{url_for('login')}}"><button type="button" class="btn btn-outline-success mx-2">Login</button></a>
-                <a href="{{url_for('signup')}}"><button type="button" class="btn btn-outline-success mx-2">Signup</button></a>
+                <a href="{{url_for('signup')}}"><button type="button" class="btn btn-outline-success mx-2">Signup</button></a> {% block logout %}{% endblock %}
             </div>
 
         </div>
