@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {%block title%}{% endblock %}
+    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css')}}">
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Lobby</a>
+            <div class="d-flex">
+                <a href="{{url_for('login')}}"><button type="button" class="btn btn-outline-success mx-2">Login</button></a>
+                <a href="{{url_for('signup')}}"><button type="button" class="btn btn-outline-success mx-2">Signup</button></a>
+            </div>
+
+        </div>
+    </nav>
+    {% block body %} {% endblock %}
+    <script src="{{url_for('static',filename='bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js')}}"></script>
+</body>
+
+</html>
