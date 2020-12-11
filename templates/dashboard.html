@@ -1,2 +1,41 @@
-{% extends 'base.html'%} {% block logout %}
-<a href="{{url_for('logout')}}"><button type="button" class="btn btn-outline-success mx-2">Logout</button></a> {% endblock %}
+{% extends 'base.html'%} 
+{% block logout %}
+<a href="{{url_for('logout')}}"><button type="button" class="btn btn-outline-success mx-2">Logout</button></a> 
+{% endblock %} 
+{% block body %} 
+
+<div class="container">
+    <div class="row">
+        {%for x in range(0,5)%}
+        <div class="col-sm-2 my-2">
+            <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        </div>
+        {% endfor %}
+        <div class="col-sm-2 my-2">
+            <div class="card text-center" style="height: 100%">
+                
+            <button id ="myBtn" class="" style="height: 100%"><img style="height: 100%" class="img-fluid" src="{{url_for('static',filename = 'icons/add.svg')}}" alt="" srcset=""></button>
+            
+        </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content" style="height: 50%">
+      <span class="close">&times;</span>
+      {{add_property_form.title.label}}{{add_property_form.title()}}
+      {{add_property_form.address.label}}{{add_property_form.address()}}
+      {{add_property_form.submit()}}
+    </div>
+  
+  </div>
+<script src="{{url_for('static',filename = '/js/script.js')}}"></script>
+{% endblock %}

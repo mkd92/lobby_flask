@@ -1,5 +1,5 @@
 from app import app,hash_password, User,db, user_loader, login_manager
-from forms import LoginForm, SignupForm
+from forms import LoginForm, SignupForm, AddProperty
 from flask import Flask, render_template, url_for, request, redirect
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 
@@ -43,13 +43,20 @@ def signup():
     
     return render_template("signup.html", signup_form=signup_form)
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    add_property_form = AddProperty()
+    
+    return render_template("dashboard.html",add_property_form = add_property_form )
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return "You are Logged out"
+
+@app.route('/add_property')
+@login_required
+def add_property():
+    return render_template("add_property.html")
