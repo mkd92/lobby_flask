@@ -1,7 +1,8 @@
-from app import app,hash_password, User,db, user_loader, login_manager
-from forms import LoginForm, SignupForm, AddProperty
-from flask import Flask, render_template, url_for, request, redirect
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from app import app,hash_password, User,db, user_loader, login_manager,Properties, Units, Transactions
+from forms import LoginForm, SignupForm, AddProperty, TransactionForm
+from flask import Flask, render_template, url_for, request, redirect, session
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
+from datetime import date
 
 
 @app.route('/',)
@@ -46,9 +47,71 @@ def signup():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    add_property_form = AddProperty()
     
-    return render_template("dashboard.html",add_property_form = add_property_form )
+    add_property_form = AddProperty()
+    if request.method =='POST':
+        if add_property_form.validate_on_submit():
+            title = add_property_form.title.data
+            address = add_property_form.address.data
+            user_id = current_user.id
+            new_property = Properties(title=title, address=address, user_id=user_id)
+            try:
+                db.session.add(new_property)
+                db.session.commit()
+                return redirect(url_for('dashboard'))
+            except:
+                return "There was a problem adding property"
+        for error in add_property_form.errors:
+            print (error)
+            
+    
+    return render_template("dashboard.html",add_property_form = add_property_form, current_user = current_user)
+
+@app.route('/dashboard/units/<int:prop_id>', methods = ['GET','POST'])
+@login_required
+def units(prop_id):
+    print(request)
+    session['prop_id'] = prop_id
+    add_property_form = AddProperty()
+    units = Units.query.filter_by(user_id = current_user.id, property_id = prop_id)
+    if request.method == 'POST':
+        if add_property_form.validate_on_submit():
+            title = add_property_form.title.data
+            detail = add_property_form.address.data
+            user_id = current_user.id
+            prop_id = prop_id
+            new_unit = Units(title = title, detail = detail, user_id = user_id, property_id = prop_id)
+            try:
+                db.session.add(new_unit)
+                db.session.commit()
+                return redirect(url_for('units', prop_id = prop_id))
+            except:
+                return "there was a problem"
+    return render_template("units.html", add_property_form = add_property_form, current_user = current_user, prop_id = prop_id, units = units)
+
+@app.route('/dashboard/units/<int:prop_id>/transactions/<int:unit_id>', methods=['POST','GET'])
+@login_required
+def transactions(prop_id, unit_id):
+    transaction_form = TransactionForm()
+    units = Units.query.filter_by(user_id = current_user.id, property_id = prop_id)
+    transactions = Transactions.query.filter_by(user_id = current_user.id, property_id = prop_id, unit_id = unit_id)
+    if request.method == 'POST':
+        print(transaction_form.date_added.data)
+        if transaction_form.validate_on_submit():
+            date_added = date.today()
+            amount = transaction_form.amount.data
+            amount = round(amount, 2)
+            detail = transaction_form.detail.data
+            new_transaction = Transactions(date_added = date_added, amount = amount, detail = detail, user_id = current_user.id, property_id = prop_id, unit_id = unit_id)
+            try:
+                db.session.add(new_transaction)
+                print (new_transaction)
+                db.session.commit()
+                return redirect(url_for('transactions', transaction_form = transaction_form, prop_id=prop_id, unit_id=unit_id, units = units,current_user = current_user, transactions = transactions))
+            except:
+                return "there was a problem"
+        print(transaction_form.errors,transaction_form.date_added.data)
+    return render_template("transactions.html",transaction_form = transaction_form, prop_id=prop_id, unit_id=unit_id, units = units,current_user = current_user, transactions = transactions)
 
 @app.route('/logout')
 @login_required

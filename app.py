@@ -1,8 +1,9 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin
 from datetime import datetime
+from flask_session import Session
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'bluebird92'
@@ -56,7 +57,7 @@ class Units(db.Model):
 
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    amount = db.Column(db.Integer, nullable = False)
+    amount = db.Column(db.Float( precision=[2]), nullable = False)
     date_added = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     detail = db.Column(db.String(120), index = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable = False)
@@ -73,5 +74,7 @@ def user_loader(id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    sess = Session()
+    sess.init_app(app)
 
 import routes
