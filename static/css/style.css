@@ -1,0 +1,147 @@
+/*    --------------------------------------------------
+	:: Login Section
+	-------------------------------------------------- */
+
+#login {
+    padding-top: 50px
+}
+
+#login .form-wrap {
+    width: 30%;
+    margin: 0 auto;
+}
+
+#login h1 {
+    color: #1fa67b;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+#login .form-group {
+    margin-bottom: 25px;
+}
+
+#login .checkbox {
+    margin-bottom: 20px;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#login .checkbox.show:before {
+    content: '\e013';
+    color: #1fa67b;
+    font-size: 17px;
+    margin: 1px 0 0 3px;
+    position: absolute;
+    pointer-events: none;
+    font-family: 'Glyphicons Halflings';
+}
+
+#login .checkbox .character-checkbox {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+#login .checkbox .label {
+    color: #6d6d6d;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+#login .btn.btn-custom {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+#login .forget {
+    font-size: 13px;
+    text-align: center;
+    display: block;
+}
+
+
+/*    --------------------------------------------------
+        :: Inputs & Buttons
+        -------------------------------------------------- */
+
+.form-control {
+    color: #212121;
+}
+
+.btn-custom {
+    color: #fff;
+    background-color: #1fa67b;
+}
+
+.btn-custom:hover,
+.btn-custom:focus {
+    color: #fff;
+}
+
+
+/*    --------------------------------------------------
+        :: Footer
+        -------------------------------------------------- */
+
+#footer {
+    color: #6d6d6d;
+    font-size: 12px;
+    text-align: center;
+}
+
+#footer p {
+    margin-bottom: 0;
+}
+
+#footer a {
+    color: inherit;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+  /* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+  /* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
