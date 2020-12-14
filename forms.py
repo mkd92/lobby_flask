@@ -26,5 +26,5 @@ class AddProperty(FlaskForm):
 
 class TransactionForm(FlaskForm):
     amount = DecimalField("Some USD Number", number_format="#,##0.00 USD", validators = [ DataRequired()])
-    date_added = DateField('Transaction Date', default= date.today)
+#    date_added = DateField('Transaction Date', default= date.today)
     detail = StringField("Details", validators=[DataRequired()])

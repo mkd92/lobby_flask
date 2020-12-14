@@ -2,8 +2,8 @@ from app import app,hash_password, User,db, user_loader, login_manager,Propertie
 from forms import LoginForm, SignupForm, AddProperty, TransactionForm
 from flask import Flask, render_template, url_for, request, redirect, session
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
-from datetime import date
-
+from datetime import date, datetime, timezone
+from sqlalchemy.exc import SQLAlchemyError
 
 @app.route('/',)
 def index():
@@ -96,20 +96,23 @@ def transactions(prop_id, unit_id):
     units = Units.query.filter_by(user_id = current_user.id, property_id = prop_id)
     transactions = Transactions.query.filter_by(user_id = current_user.id, property_id = prop_id, unit_id = unit_id)
     if request.method == 'POST':
-        print(transaction_form.date_added.data)
         if transaction_form.validate_on_submit():
-            date_added = date.today()
+            date_added = request.form.get('tran_date')
+            if date_added:
+                date_added = date_added.replace('T', ' ')
+                date_added = datetime.strptime(date_added, '%Y-%m-%d %H:%M')
+            else:
+                date_added = datetime.now()
             amount = transaction_form.amount.data
             amount = round(amount, 2)
             detail = transaction_form.detail.data
             new_transaction = Transactions(date_added = date_added, amount = amount, detail = detail, user_id = current_user.id, property_id = prop_id, unit_id = unit_id)
             try:
                 db.session.add(new_transaction)
-                print (new_transaction)
                 db.session.commit()
                 return redirect(url_for('transactions', transaction_form = transaction_form, prop_id=prop_id, unit_id=unit_id, units = units,current_user = current_user, transactions = transactions))
-            except:
-                return "there was a problem"
+            except SQLAlchemyError as e:
+                return str(e.__dict__['orig'])
         print(transaction_form.errors,transaction_form.date_added.data)
     return render_template("transactions.html",transaction_form = transaction_form, prop_id=prop_id, unit_id=unit_id, units = units,current_user = current_user, transactions = transactions)
 

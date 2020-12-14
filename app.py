@@ -2,12 +2,13 @@ from flask import Flask, render_template, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_session import Session
+from os import environ
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'bluebird92'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydb.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL') or 'sqlite:///mydb.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager()

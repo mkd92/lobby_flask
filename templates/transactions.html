@@ -44,23 +44,23 @@
         <th scope="col">Date</th>
         <th scope="col">Amount</th>
         <th scope="col">Detail</th>
-      </tr>
+    </tr>
     </thead>
     <tbody>
-      {% for transaction in transactions %}
+    {% for transaction in transactions %}
         <tr>
-        <th scope="row">{{transaction.date}}</th>
+        <th scope="row">{{transaction.date_added.strftime("%d/%m/%Y, %H:%M")}}</th>
         <td>{{transaction.amount}}</td>
         <td>{{transaction.detail}}</td>
-      </tr>
-      {% endfor %}
+    </tr>
+    {% endfor %}
 
-      <form action="{{url_for('transactions', unit_id = unit_id, prop_id = prop_id)}}" method="POST">
-      <tr>
+    <form action="{{url_for('transactions', unit_id = unit_id, prop_id = prop_id)}}" method="POST">
+    <tr>
         {{transaction_form.csrf_token}}
-              <th scope="row"></th>
-              <td>{{transaction_form.amount()}}</td>
-              <td>{{transaction_form.detail()}}</td>
+            <th scope="row"><input type="datetime-local" name="tran_date" id="tdate"></th>
+            <td>{{transaction_form.amount()}}</td>
+            <td>{{transaction_form.detail()}}</td>
             </tr>
             <tr>
                 <td></td>
@@ -69,8 +69,8 @@
             </tr>
         </form>
     </tbody>
-  </table>
-  
+</table>
+
 
 
 {% endblock %}
