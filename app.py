@@ -57,7 +57,7 @@ class Units(db.Model):
 
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    amount = db.Column(db.Float( precision=[2]), nullable = False)
+    amount = db.Column(db.Float, nullable = False)
     date_added = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     detail = db.Column(db.String(120), index = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable = False)
