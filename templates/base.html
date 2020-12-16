@@ -5,19 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> {%block title%}{% endblock %}
     <link rel="stylesheet" href="{{url_for('static',filename='bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='tailwind/tailwind.css')}}">
+
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Lobby</a>
-            <div class="d-flex">
-                <a href="{{url_for('login')}}"><button type="button" class="btn btn-outline-success mx-2">Login</button></a>
-                <a href="{{url_for('signup')}}"><button type="button" class="btn btn-outline-success mx-2">Signup</button></a> {% block logout %}{% endblock %}
-            </div>
+    <div class="flex flex-col">
+        <!--    <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Lobby</a>
+                <div class="d-flex">
+                    <a href="{{url_for('login')}}"><button type="button" class="btn btn-outline-success mx-2">Login</button></a>
+                    <a href="{{url_for('signup')}}"><button type="button" class="btn btn-outline-success mx-2">Signup</button></a> {% block logout %}{% endblock %}
+                </div>
 
+            </div>
+        </nav> -->
+        <div class="flex flex-col">
+            <div class="flex justify-between h-14 items-center">
+                <div class="mx-4 text-lg font-bold">Lobby</div>
+                <div class="flex">
+                    <a href="{{url_for('signup')}}" type="button" class="btn-primary transition duration-300 ease-in-out focus:outline-none focus:shadow-outline bg-green-600 hover:bg-purple-900 text-white font-bold py-2 px-4 mr-1 rounded">Signup</a>
+                    <a href="{{url_for('login')}}" type="button" class="btn-primary transition duration-300 ease-in-out focus:outline-none focus:shadow-outline bg-green-600 hover:bg-purple-900 text-white font-bold py-2 px-4 mr-1 rounded">Login</a>
+                </div>
+            </div>
         </div>
-    </nav>
+    </div>
     {% block body %} {% endblock %}
     <script src="{{url_for('static',filename='bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js')}}"></script>
 </body>
